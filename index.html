@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLACK SQUAD | WELCOME</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
+        #intro-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: fixed; /* Keep it fixed in the center of the viewport */
+            top: 0;
+            left: 0;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .welcome-text {
+            font-size: 2rem;
+            color: #ffffff;
+            opacity: 0;
+            letter-spacing: 10px;
+            animation: fadeInOut 4s forwards;
+        }
+
+        .squad-text {
+            font-size: 10rem;
+            font-weight: 900;
+            opacity: 0;
+            display: none;
+            background: linear-gradient(110deg, #444 40%, #fff 50%, #444 60%);
+            background-size: 200% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gowReveal 3.5s cubic-bezier(0.19, 1, 0.22, 1) forwards, 
+                       bloom 4s infinite 3.5s,
+                       glint 5s infinite 4s;
+            letter-spacing: 10px;
+        }
+
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        @keyframes gowReveal {
+            0% { 
+                opacity: 0; 
+                transform: scale(3.5) translateY(100px) skewX(-10deg); 
+                filter: blur(30px) brightness(0);
+                letter-spacing: 120px;
+            }
+            20% {
+                opacity: 0.2;
+                filter: blur(20px) brightness(0.5);
+            }
+            60% {
+                opacity: 0.8;
+                filter: blur(5px) brightness(1.2);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0) skewX(-10deg); 
+                filter: blur(0) brightness(1);
+                letter-spacing: 10px;
+            }
+        }
+
+        @keyframes glint {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(20px); }
+            30% { opacity: 1; transform: translateY(0); }
+            70% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-20px); }
+        }
+
+        #enter-btn {
+            margin-top: 2rem;
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            cursor: pointer;
+            opacity: 0;
+            transition: var(--transition);
+            display: none;
+        }
+
+        #enter-btn:hover {
+            background: var(--neon-red);
+            color: #000;
+            box-shadow: var(--neon-glow);
+            transform: scale(1.1);
+        }
+
+        .glitch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--neon-red);
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Particles/Embers */
+        .particle {
+            position: absolute;
+            background: var(--neon-red);
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.6;
+            box-shadow: 0 0 5px var(--neon-red);
+        }
+    </style>
+</head>
+<body>
+    <div id="bg-smoke"></div>
+    <canvas id="particle-canvas"></canvas>
+
+    <div id="intro-container">
+        <div class="welcome-text bebas" id="welcome">WELCOME TO</div>
+        <div class="squad-text blade-font" id="squad" data-text="BLACK SQUAD">BLACK SQUAD</div>
+        <button id="enter-btn" class="bebas">ENTER THE TERRITORY</button>
+    </div>
+
+    <div class="glitch-overlay" id="overlay"></div>
+
+    <script>
+        // Smoke Particles
+        const smokeContainer = document.getElementById('bg-smoke');
+        for (let i = 0; i < 8; i++) {
+            const smoke = document.createElement('div');
+            smoke.className = 'smoke-particle';
+            smoke.style.left = Math.random() * 100 + '%';
+            smoke.style.top = Math.random() * 100 + '%';
+            smoke.style.animationDelay = (Math.random() * 10) + 's';
+            smokeContainer.appendChild(smoke);
+        }
+
+        // Particle Canvas (Embers)
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 10;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 2 - 1;
+                this.opacity = Math.random() * 0.5 + 0.5;
+            }
+            update() {
+                this.y -= this.speedY;
+                this.x += this.speedX;
+                if (this.size > 0.1) this.size -= 0.01;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 0, 0, ${this.opacity})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#ff0000';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (particles.length < 50) particles.push(new Particle());
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.1 || particles[i].y < 0) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Intro Sequence
+        const welcome = document.getElementById('welcome');
+        const squad = document.getElementById('squad');
+        const enterBtn = document.getElementById('enter-btn');
+        const overlay = document.getElementById('overlay');
+
+        setTimeout(() => {
+            squad.style.display = 'block';
+            squad.style.opacity = '1';
+            
+            // Bass Impact Flash (delayed slightly to match the "hit" of the reveal)
+            setTimeout(() => {
+                overlay.style.opacity = '0.3';
+                setTimeout(() => overlay.style.opacity = '0', 150);
+            }, 500);
+
+            // Button appears after the long reveal
+            setTimeout(() => {
+                enterBtn.style.display = 'inline-block';
+                enterBtn.style.opacity = '1';
+            }, 3000);
+        }, 4000);
+
+        enterBtn.addEventListener('click', () => {
+            overlay.style.transition = 'opacity 0.5s ease-in-out';
+            overlay.style.opacity = '1';
+            
+            // Glitch effect on transition
+            let glitchCount = 0;
+            const glitchInterval = setInterval(() => {
+                overlay.style.transform = `translate(${Math.random()*10-5}px, ${Math.random()*10-5}px)`;
+                glitchCount++;
+                if (glitchCount > 10) clearInterval(glitchInterval);
+            }, 50);
+
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 800);
+        });
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>

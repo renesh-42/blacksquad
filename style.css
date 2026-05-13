@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;500;700&family=Syne:wght@800&family=Metal+Mania&display=swap');
+
+:root {
+    --bg-black: #050505;
+    --neon-red: #ff0000;
+    --crimson: #990000;
+    --dark-grey: #1a1a1a;
+    --glass-bg: rgba(10, 10, 10, 0.85);
+    --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: crosshair; /* Gangster/Hacker feel */
+}
+
+body {
+    background-color: var(--bg-black);
+    color: #ffffff;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.bebas {
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+/* Animations */
+.blade-font {
+    font-family: 'Metal Mania', cursive;
+    text-transform: uppercase;
+    font-size: 12rem;
+    color: #fff;
+    background: linear-gradient(135deg, #444 0%, #111 50%, #444 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.8)) drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
+    position: relative;
+    transform: skewX(-10deg);
+}
+
+.blade-font::before {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    -webkit-text-stroke: 2px #ff0000;
+    text-shadow: 2px 2px 0px #900, 4px 4px 0px #600, 6px 6px 0px #300;
+}
+
+@keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+}
+
+@keyframes bloom {
+    0%, 100% { text-shadow: none; }
+    50% { text-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red), 0 0 40px var(--crimson); }
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
+}
+
+@keyframes smoke-float {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+    50% { transform: translate(20px, -20px) scale(1.1); opacity: 0.5; }
+    100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+}
+
+@keyframes pulse-red {
+    0% { box-shadow: 0 0 5px var(--neon-red); }
+    50% { box-shadow: 0 0 25px var(--neon-red); }
+    100% { box-shadow: 0 0 5px var(--neon-red); }
+}
+
+@keyframes bass-impact {
+    0% { transform: scale(0.8); filter: blur(10px); opacity: 0; }
+    50% { transform: scale(1.1); filter: blur(0); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+/* Scroll Reveal */
+.reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Glassmorphism */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 0, 0, 0.1);
+    border-radius: 4px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.neon-border {
+    position: relative;
+    border: 1px solid var(--crimson);
+}
+
+.neon-border::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 1px solid var(--neon-red);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.neon-border:hover::after {
+    opacity: 1;
+    box-shadow: var(--neon-glow);
+}
+
+/* Background Smoke/Fog */
+#bg-smoke {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle at 50% 50%, rgba(20, 0, 0, 0.2), transparent);
+}
+
+.smoke-particle {
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(50, 0, 0, 0.1) 0%, transparent 70%);
+    filter: blur(50px);
+    animation: smoke-float 15s infinite ease-in-out;
+}
+
+/* Responsive & Cinematic Scaling */
+@media (min-width: 1920px) {
+    html {
+        font-size: 18px; /* Scale up everything slightly for 1080p */
+    }
+    .hero-title {
+        font-size: 8rem;
+    }
+    section {
+        padding: 120px 15%;
+    }
+}
+
+@media (max-width: 768px) {
+    .squad-text {
+        font-size: 4rem;
+    }
+    .hero-title {
+        font-size: 3rem;
+    }
+    section {
+        padding: 60px 5%;
+    }
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+}
