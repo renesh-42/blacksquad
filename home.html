@@ -711,7 +711,7 @@
 <body>
     <section id="video-hero">
         <div class="video-overlay"></div>
-        <video id="intro-video" muted playsinline loop>
+        <video id="intro-video" playsinline>
             <source src="next_video.mp4.mp4" type="video/mp4">
         </video>
         <div class="scroll-indicator">
@@ -938,7 +938,20 @@
             const video = document.getElementById('intro-video');
             if (video) {
                 video.currentTime = 28;
-                video.play().catch(e => console.error("Autoplay failed", e));
+                video.volume = 1.0;
+                
+                // Attempt to play with sound
+                video.play().catch(e => {
+                    console.log("Autoplay with sound blocked, trying muted...");
+                    video.muted = true;
+                    video.play();
+                });
+
+                // Handle custom loop from 0:28 instead of 0:00
+                video.addEventListener('ended', () => {
+                    video.currentTime = 28;
+                    video.play();
+                });
             }
             // Cards will be triggered on scroll instead
 
