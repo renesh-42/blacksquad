@@ -28,7 +28,8 @@
             align-items: center;
         }
 
-        #video-hero video, #video-hero iframe {
+        #video-hero video,
+        #video-hero iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -46,7 +47,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.8) 100%);
+            background: radial-gradient(circle, transparent 20%, rgba(0, 0, 0, 0.8) 100%);
             z-index: 2;
             pointer-events: none;
         }
@@ -70,9 +71,22 @@
         }
 
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translate(-50%, 0);}
-            40% {transform: translate(-50%, -10px);}
-            60% {transform: translate(-50%, -5px);}
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translate(-50%, 0);
+            }
+
+            40% {
+                transform: translate(-50%, -10px);
+            }
+
+            60% {
+                transform: translate(-50%, -5px);
+            }
         }
 
         .mouse {
@@ -98,8 +112,15 @@
         }
 
         @keyframes scroll {
-            0% { opacity: 1; top: 8px; }
-            100% { opacity: 0; top: 25px; }
+            0% {
+                opacity: 1;
+                top: 8px;
+            }
+
+            100% {
+                opacity: 0;
+                top: 25px;
+            }
         }
 
         #terminal-section {
@@ -149,15 +170,17 @@
         }
 
         /* Initial positions for the side-entry animation */
-        .flip-card:nth-child(1), .flip-card:nth-child(2) {
+        .flip-card:nth-child(1),
+        .flip-card:nth-child(2) {
             transform: translateX(-100vw) rotateY(-45deg);
         }
-        
+
         .flip-card:nth-child(3) {
             transform: scale(0) translateZ(-500px);
         }
 
-        .flip-card:nth-child(4), .flip-card:nth-child(5) {
+        .flip-card:nth-child(4),
+        .flip-card:nth-child(5) {
             transform: translateX(100vw) rotateY(45deg);
         }
 
@@ -723,190 +746,191 @@
 
     <section id="terminal-section">
 
-    <div class="main-wrapper">
-        <div class="cards-grid">
-            <!-- 5 Cards - Leader in Center -->
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front"></div>
-                    <div class="flip-card-back">
-                        <img src="supreme_member.jpg" class="card-image" alt="Supreme Member">
-                        <div class="card-info">
-                            <p class="card-role">KOSHY KURIEN</p>
-                            <h3>SUPREME</h3>
-                        </div>
-                        <div class="beam beam-1"></div>
-                        <div class="beam beam-2"></div>
-                        <div class="beam beam-3"></div>
-                        <div class="hologram-box box-1">
-                            <div class="holo-header">TACTICAL_READOUT <span class="status-dot"></span></div>
-                            <div class="stat-line">ACCURACY <span style="color:#fff">98%</span></div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 98%"></div>
+        <div class="main-wrapper">
+            <div class="cards-grid">
+                <!-- 5 Cards - Leader in Center -->
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"></div>
+                        <div class="flip-card-back">
+                            <img src="supreme_member.jpg" class="card-image" alt="Supreme Member">
+                            <div class="card-info">
+                                <p class="card-role">KOSHY KURIEN</p>
+                                <h3>SUPREME</h3>
                             </div>
-                            <div class="stat-line" style="margin-top:8px">STEALTH <span style="color:#fff">85%</span>
+                            <div class="beam beam-1"></div>
+                            <div class="beam beam-2"></div>
+                            <div class="beam beam-3"></div>
+                            <div class="hologram-box box-1">
+                                <div class="holo-header">TACTICAL_READOUT <span class="status-dot"></span></div>
+                                <div class="stat-line">ACCURACY <span style="color:#fff">98%</span></div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 98%"></div>
+                                </div>
+                                <div class="stat-line" style="margin-top:8px">STEALTH <span
+                                        style="color:#fff">85%</span>
+                                </div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 85%"></div>
+                                </div>
                             </div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 85%"></div>
+                            <div class="hologram-box box-2">
+                                <div class="holo-header">OPERATIONAL_STATUS</div>
+                                <div style="font-size:0.65rem; line-height:1.4">
+                                    LOCATION: [REDACTED]<br>
+                                    THREAT: EXTREME<br>
+                                    STATUS: ACTIVE_OP
+                                </div>
                             </div>
-                        </div>
-                        <div class="hologram-box box-2">
-                            <div class="holo-header">OPERATIONAL_STATUS</div>
-                            <div style="font-size:0.65rem; line-height:1.4">
-                                LOCATION: [REDACTED]<br>
-                                THREAT: EXTREME<br>
-                                STATUS: ACTIVE_OP
-                            </div>
-                        </div>
-                        <div class="hologram-box box-3">
-                            <div class="holo-header">SUBJECT_BIO</div>
-                            <div style="font-size:0.6rem; opacity:0.8">
-                                NAME: KOSHY KURIEN<br>
-                                ROLE: SUPREME LEADER<br>
-                                ORIGIN: KERALA_DISTRICT
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front"></div>
-                    <div class="flip-card-back">
-                        <img src="hacker.png" class="card-image" alt="Hacker">
-                        <div class="card-info">
-                            <p class="card-role">CYPHER</p>
-                            <h3>HACKER</h3>
-                        </div>
-                        <div class="beam beam-1"></div>
-                        <div class="beam beam-2"></div>
-                        <div class="beam beam-3"></div>
-                        <div class="hologram-box box-1">
-                            <div class="holo-header">NETWORK_INTEL <span class="status-dot"></span></div>
-                            <div class="stat-line">CRYPT <span style="color:#fff">99%</span></div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 99%"></div>
-                            </div>
-                            <div class="stat-line" style="margin-top:8px">BYPASS <span style="color:#fff">96%</span>
-                            </div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 96%"></div>
-                            </div>
-                        </div>
-                        <div class="hologram-box box-2">
-                            <div class="holo-header">CYBER_SIGNATURE</div>
-                            <div style="font-size:0.65rem">
-                                UPTIME: 99.9%<br>
-                                TRACE: NONE<br>
-                                ACCESS: LEVEL_05
-                            </div>
-                        </div>
-                        <div class="hologram-box box-3">
-                            <div class="holo-header">BIO_DOCK</div>
-                            <div style="font-size:0.6rem; opacity:0.8">
-                                NAME: CYPHER<br>
-                                SPECIALTY: DEEP_WEB<br>
-                                TOOLKIT: V_TERMINAL
+                            <div class="hologram-box box-3">
+                                <div class="holo-header">SUBJECT_BIO</div>
+                                <div style="font-size:0.6rem; opacity:0.8">
+                                    NAME: KOSHY KURIEN<br>
+                                    ROLE: SUPREME LEADER<br>
+                                    ORIGIN: KERALA_DISTRICT
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flip-card" data-type="leader" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front"></div>
-                    <div class="flip-card-back">
-                        <img src="koshy_epic.jpg" class="card-image" alt="Supreme Leader">
-                        <div class="beam beam-1"></div>
-                        <div class="beam beam-2"></div>
-                        <div class="beam beam-3"></div>
-                        <div class="hologram-box box-1">
-                            <div class="holo-header">THREAT_LEVEL <span class="status-dot"
-                                    style="background:#f00"></span></div>
-                            <div class="stat-line">DANGER <span style="color:#f44">MAX</span></div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 100%; background:#f00"></div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"></div>
+                        <div class="flip-card-back">
+                            <img src="hacker.png" class="card-image" alt="Hacker">
+                            <div class="card-info">
+                                <p class="card-role">CYPHER</p>
+                                <h3>HACKER</h3>
                             </div>
-                        </div>
-                        <div class="hologram-box box-2">
-                            <div class="holo-header">COMMAND_READOUT</div>
-                            <div style="font-size:0.65rem">AUTHORITY: ABSOLUTE</div>
-                        </div>
-                        <div class="hologram-box box-3">
-                            <div class="holo-header">LEADER_BIO</div>
-                            <div style="font-size:0.6rem">UNKNOWN ORIGIN</div>
+                            <div class="beam beam-1"></div>
+                            <div class="beam beam-2"></div>
+                            <div class="beam beam-3"></div>
+                            <div class="hologram-box box-1">
+                                <div class="holo-header">NETWORK_INTEL <span class="status-dot"></span></div>
+                                <div class="stat-line">CRYPT <span style="color:#fff">99%</span></div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 99%"></div>
+                                </div>
+                                <div class="stat-line" style="margin-top:8px">BYPASS <span style="color:#fff">96%</span>
+                                </div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 96%"></div>
+                                </div>
+                            </div>
+                            <div class="hologram-box box-2">
+                                <div class="holo-header">CYBER_SIGNATURE</div>
+                                <div style="font-size:0.65rem">
+                                    UPTIME: 99.9%<br>
+                                    TRACE: NONE<br>
+                                    ACCESS: LEVEL_05
+                                </div>
+                            </div>
+                            <div class="hologram-box box-3">
+                                <div class="holo-header">BIO_DOCK</div>
+                                <div style="font-size:0.6rem; opacity:0.8">
+                                    NAME: CYPHER<br>
+                                    SPECIALTY: DEEP_WEB<br>
+                                    TOOLKIT: V_TERMINAL
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front"></div>
-                    <div class="flip-card-back">
-                        <img src="https://images.unsplash.com/photo-1541890289-b86df5bafd81?auto=format&fit=crop&q=80&w=400&h=600"
-                            class="card-image" alt="Driver">
-                        <div class="card-info">
-                            <p class="card-role">PHANTOM</p>
-                            <h3>DRIVER</h3>
-                        </div>
-                        <div class="beam beam-1"></div>
-                        <div class="beam beam-2"></div>
-                        <div class="beam beam-3"></div>
-                        <div class="hologram-box box-1">
-                            <div class="holo-header">DRIVE_STATS <span class="status-dot"></span></div>
-                            <div class="stat-line">SPEED <span style="color:#fff">95%</span></div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 95%"></div>
+                <div class="flip-card" data-type="leader" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"></div>
+                        <div class="flip-card-back">
+                            <img src="koshy_epic.jpg" class="card-image" alt="Supreme Leader">
+                            <div class="beam beam-1"></div>
+                            <div class="beam beam-2"></div>
+                            <div class="beam beam-3"></div>
+                            <div class="hologram-box box-1">
+                                <div class="holo-header">THREAT_LEVEL <span class="status-dot"
+                                        style="background:#f00"></span></div>
+                                <div class="stat-line">DANGER <span style="color:#f44">MAX</span></div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 100%; background:#f00"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="hologram-box box-2">
-                            <div class="holo-header">VEHICLE_SYC</div>
-                            <div style="font-size:0.65rem">PHANTOM_UNIT: ACTIVE</div>
-                        </div>
-                        <div class="hologram-box box-3">
-                            <div class="holo-header">BIO_DATA</div>
-                            <div style="font-size:0.6rem">WANTED: WORLDWIDE</div>
+                            <div class="hologram-box box-2">
+                                <div class="holo-header">COMMAND_READOUT</div>
+                                <div style="font-size:0.65rem">AUTHORITY: ABSOLUTE</div>
+                            </div>
+                            <div class="hologram-box box-3">
+                                <div class="holo-header">LEADER_BIO</div>
+                                <div style="font-size:0.6rem">UNKNOWN ORIGIN</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="flip-card" onclick="this.classList.toggle('flipped')">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front"></div>
-                    <div class="flip-card-back">
-                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400&h=600"
-                            class="card-image" alt="Assassin">
-                        <div class="card-info">
-                            <p class="card-role">VIPER</p>
-                            <h3>ASSASSIN</h3>
-                        </div>
-                        <div class="beam beam-1"></div>
-                        <div class="beam beam-2"></div>
-                        <div class="beam beam-3"></div>
-                        <div class="hologram-box box-1">
-                            <div class="holo-header">LETHAL_INDEX <span class="status-dot"></span></div>
-                            <div class="stat-line">SILENCE <span style="color:#fff">100%</span></div>
-                            <div class="stat-fill-bg">
-                                <div class="stat-fill-val" style="--p: 100%"></div>
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"></div>
+                        <div class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1541890289-b86df5bafd81?auto=format&fit=crop&q=80&w=400&h=600"
+                                class="card-image" alt="Driver">
+                            <div class="card-info">
+                                <p class="card-role">PHANTOM</p>
+                                <h3>DRIVER</h3>
+                            </div>
+                            <div class="beam beam-1"></div>
+                            <div class="beam beam-2"></div>
+                            <div class="beam beam-3"></div>
+                            <div class="hologram-box box-1">
+                                <div class="holo-header">DRIVE_STATS <span class="status-dot"></span></div>
+                                <div class="stat-line">SPEED <span style="color:#fff">95%</span></div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="hologram-box box-2">
+                                <div class="holo-header">VEHICLE_SYC</div>
+                                <div style="font-size:0.65rem">PHANTOM_UNIT: ACTIVE</div>
+                            </div>
+                            <div class="hologram-box box-3">
+                                <div class="holo-header">BIO_DATA</div>
+                                <div style="font-size:0.6rem">WANTED: WORLDWIDE</div>
                             </div>
                         </div>
-                        <div class="hologram-box box-2">
-                            <div class="holo-header">SHADOW_NET</div>
-                            <div style="font-size:0.65rem">VISIBILITY: 0%</div>
-                        </div>
-                        <div class="hologram-box box-3">
-                            <div class="holo-header">TARGET_LOG</div>
-                            <div style="font-size:0.6rem">CONFIRMED: [REDACTED]</div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"></div>
+                        <div class="flip-card-back">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=400&h=600"
+                                class="card-image" alt="Assassin">
+                            <div class="card-info">
+                                <p class="card-role">VIPER</p>
+                                <h3>ASSASSIN</h3>
+                            </div>
+                            <div class="beam beam-1"></div>
+                            <div class="beam beam-2"></div>
+                            <div class="beam beam-3"></div>
+                            <div class="hologram-box box-1">
+                                <div class="holo-header">LETHAL_INDEX <span class="status-dot"></span></div>
+                                <div class="stat-line">SILENCE <span style="color:#fff">100%</span></div>
+                                <div class="stat-fill-bg">
+                                    <div class="stat-fill-val" style="--p: 100%"></div>
+                                </div>
+                            </div>
+                            <div class="hologram-box box-2">
+                                <div class="holo-header">SHADOW_NET</div>
+                                <div style="font-size:0.65rem">VISIBILITY: 0%</div>
+                            </div>
+                            <div class="hologram-box box-3">
+                                <div class="holo-header">TARGET_LOG</div>
+                                <div style="font-size:0.6rem">CONFIRMED: [REDACTED]</div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </section>
 
     <script>
