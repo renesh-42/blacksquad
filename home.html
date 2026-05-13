@@ -711,7 +711,7 @@
 <body>
     <section id="video-hero">
         <div class="video-overlay"></div>
-        <video id="intro-video" playsinline>
+        <video id="intro-video" muted playsinline>
             <source src="next_video.mp4.mp4" type="video/mp4">
         </video>
         <div class="scroll-indicator">
@@ -936,15 +936,25 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('intro-video');
+            
+            // Background Music (Starting at 0:28)
+            const bgMusic = new Audio('music.mp3.mp3');
+            bgMusic.currentTime = 28;
+            bgMusic.volume = 0.25;
+            bgMusic.loop = true;
+            
+            // Play immediately or on first interaction if blocked
+            bgMusic.play().catch(e => {
+                document.addEventListener('click', () => bgMusic.play(), { once: true });
+            });
+
             if (video) {
                 video.currentTime = 28;
-                video.volume = 0.05;
-                
-                // Attempt to play with sound
+                video.muted = true;
+
+                // Attempt to play
                 video.play().catch(e => {
-                    console.log("Autoplay with sound blocked, trying muted...");
-                    video.muted = true;
-                    video.play();
+                    console.log("Autoplay failed", e);
                 });
 
                 // Handle custom loop from 0:28 instead of 0:00
