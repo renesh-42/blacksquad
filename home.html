@@ -7,13 +7,17 @@
     <title>BLACK SQUAD | SYNDICATE TERMINAL</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        html {
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg-black);
             overflow-x: hidden;
             overflow-y: hidden;
             margin: 0;
             width: 100vw;
-            scroll-behavior: smooth;
         }
 
         /* Video Hero Section */
@@ -518,53 +522,7 @@
             font-size: 0.6rem;
         }
 
-        .terminal-menu {
-            position: fixed;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 40px;
-            z-index: 100;
-        }
 
-        .menu-item {
-            font-family: 'Orbitron', sans-serif;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            position: relative;
-            padding: 5px 0;
-        }
-
-        .menu-item::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--neon-red);
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--neon-red);
-        }
-
-        .menu-item:hover {
-            color: #fff;
-            text-shadow: 0 0 10px var(--neon-red);
-        }
-
-        .menu-item:hover::after {
-            width: 100%;
-        }
-
-        .menu-item.active {
-            color: var(--neon-red);
-            text-shadow: 0 0 10px var(--neon-red);
-        }
 
         .hud-overlay {
             position: fixed;
@@ -797,14 +755,298 @@
                 display: none;
             }
         }
+
+        /* Detail Section Styling */
+        #details-section {
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 10%;
+            background: radial-gradient(circle at 50% 50%, #0a0a0a 0%, #000 100%);
+            overflow: hidden;
+            z-index: 5;
+        }
+
+        .details-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 100px;
+            max-width: 1400px;
+            width: 100%;
+        }
+
+        .leader-falling-card {
+            flex-shrink: 0;
+            transform: scale(1.5);
+            opacity: 0;
+            filter: blur(20px) brightness(2) contrast(200%);
+            /* Transition for the coalescence effect */
+            transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 1.5s ease-out,
+                filter 2s cubic-bezier(0.16, 1, 0.3, 1);
+            perspective: 2000px;
+            will-change: transform, opacity, filter;
+        }
+
+        #details-section.active .leader-falling-card {
+            transform: scale(1.1);
+            opacity: 1;
+            filter: blur(0) brightness(1) contrast(1.3);
+        }
+
+        /* Particle styles for the forming effect */
+        .forming-particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: var(--neon-red);
+            box-shadow: 0 0 8px var(--neon-red);
+            border-radius: 1px;
+            z-index: 9999;
+            pointer-events: none;
+            transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+            opacity: 0.8;
+        }
+
+        /* Leader Image Hover Transition */
+        .leader-falling-card .flip-card:hover {
+            transform: scale(1.1) !important;
+            /* Lock scale to prevent zoom */
+            margin: 0 !important;
+            animation: none !important;
+        }
+
+        .leader-falling-card .flip-card-front::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('koshy_epic.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            /* Soft, feathered spotlight using Masking */
+            mask-image: radial-gradient(circle 120px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 20%, transparent 100%);
+            -webkit-mask-image: radial-gradient(circle 120px at var(--mouse-x, 50%) var(--mouse-y, 50%), black 20%, transparent 100%);
+            transition: opacity 0.3s ease;
+            filter: grayscale(0) contrast(1.3) brightness(1.2);
+            z-index: 1;
+        }
+
+        .leader-falling-card .flip-card:hover .flip-card-front::after {
+            opacity: 1;
+        }
+
+        .leader-info-panel {
+            flex-grow: 1;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            border-left: 2px solid var(--neon-red);
+            padding-left: 40px;
+            /* Border is always present as a static anchor */
+        }
+
+        #details-section.active .leader-info-panel {
+            opacity: 1;
+        }
+
+        /* Staggered printing for individual elements */
+        .leader-info-panel>* {
+            opacity: 0;
+            transform: translateY(15px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #details-section.active .tactical-tag {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 1.4s;
+        }
+
+        #details-section.active h2 {
+            opacity: 1;
+        }
+
+        .typing-cursor {
+            color: var(--neon-red);
+            animation: blink 0.8s infinite;
+            margin-left: 5px;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        @keyframes blink-twice {
+
+            0%,
+            30%,
+            60%,
+            100% {
+                opacity: 1;
+            }
+
+            15%,
+            45% {
+                opacity: 0;
+            }
+        }
+
+        .blink-twice {
+            animation: blink-twice 0.8s ease-in-out !important;
+        }
+
+        .bio-text {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .leader-info-panel h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            color: var(--neon-red);
+            margin: 0 0 20px 0;
+            text-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            letter-spacing: 5px;
+        }
+
+        .leader-info-panel .bio-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            letter-spacing: 1px;
+        }
+
+        .tactical-tag {
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--neon-red);
+            color: var(--neon-red);
+            padding: 5px 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            margin-bottom: 25px;
+        }
+
+        /* Hide leader card in terminal when transitioning to details */
+        .flip-card[data-type="leader"].moving-down {
+            opacity: 0 !important;
+            pointer-events: none;
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        /* 3D CAROUSEL SECTION */
+        #carousel-section {
+            height: 100vh;
+            background: url('bg2.png') no-repeat center center;
+            background-size: 650px 900px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            z-index: 5;
+        }
+
+        .carousel-banner {
+            width: 100%;
+            height: 100%;
+            perspective: 1500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+
+        .carousel-slider {
+            position: absolute;
+            width: 180px;
+            height: 250px;
+            transform-style: preserve-3d;
+            animation: carousel-rotate 25s linear infinite;
+        }
+
+        @keyframes carousel-rotate {
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .carousel-item {
+            position: absolute;
+            inset: 0;
+            transform: rotateY(calc((var(--i) - 1) * 36deg)) translateZ(550px);
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            pointer-events: auto;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(0.5) contrast(1.1);
+            transition: all 0.5s ease;
+            /* Remove any inherent card-like shadows */
+        }
+
+        .carousel-item:hover img {
+            filter: grayscale(0) contrast(1.3) brightness(1.2);
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px var(--neon-red));
+        }
+
+        .center-leader {
+            position: absolute;
+            width: 650px;
+            height: 900px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            /* Put in 3D space but at the center */
+            transform: translateZ(0);
+            transform-style: preserve-3d;
+            background: transparent !important;
+        }
+
+        .center-leader img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* Remove black background by blending it with the dark environment */
+            mix-blend-mode: screen;
+            filter: contrast(1.1) brightness(1.1);
+            background: transparent !important;
+        }
     </style>
 </head>
 
 <body>
-    <section id="video-hero">
+    <section id="video-hero" style="scroll-snap-align: start;">
         <div class="video-overlay"></div>
         <video id="intro-video" muted playsinline>
-            <source src="next_video.mp4.mp4" type="video/mp4">
+            <source src="intro_vedio.mp4" type="video/mp4">
         </video>
     </section>
 
@@ -829,15 +1071,9 @@
 
     <button id="skip-intro" class="skip-btn">SKIP INTRO</button>
 
-    <nav class="terminal-menu">
-        <a href="#" class="menu-item active">TERMINAL</a>
-        <a href="#" class="menu-item">CREW</a>
-        <a href="#" class="menu-item">OPERATIONS</a>
-        <a href="#" class="menu-item">ARCHIVES</a>
-        <a href="#" class="menu-item">JOIN</a>
-    </nav>
 
-    <section id="terminal-section">
+
+    <section id="terminal-section" style="scroll-snap-align: start;">
 
         <div class="main-wrapper">
             <div class="cards-grid">
@@ -1026,13 +1262,84 @@
         </div>
     </section>
 
+    <section id="details-section" style="scroll-snap-align: start;">
+        <div class="details-wrapper">
+            <div class="leader-falling-card">
+                <div class="flip-card" style="opacity: 1; transform: scale(1.1); margin: 0; pointer-events: none;">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front"
+                            style="background-image: url('3000.jpeg'); filter: grayscale(0) contrast(1.3) brightness(1.2);">
+                        </div>
+                        <div class="flip-card-back">
+                            <img src="3000.jpeg" class="card-image" alt="Supreme Leader"
+                                style="filter: grayscale(0) contrast(1.3) brightness(1.2);">
+                            <div class="card-info">
+                                <p class="card-role">KOSHY KURIEN</p>
+                                <h3>SUPREME</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="leader-info-panel">
+                <span class="tactical-tag">SYNDICATE_LEADER // CLASSIFIED</span>
+                <h2>KOSHY KURIEN</h2>
+                <div class="bio-text">
+                    Known across the districts as the "Supreme," Koshy Kurien commands the Black Squad with absolute
+                    authority.
+                    Operating from the shadows of the Kerala sector, he has orchestrated some of the most high-stakes
+                    cyber-heists and tactical operations in syndicate history. <br><br>
+                    His strategic brilliance and unwavering discipline have turned the Black Squad into a global
+                    powerhouse.
+                    Every move is calculated, every strike is lethal. Approach with extreme caution: status is set to
+                    ABSOLUTE COMMAND.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="carousel-section" style="scroll-snap-align: start;">
+        <div class="carousel-banner">
+            <div class="carousel-slider">
+                <div class="carousel-item" style="--i:1;"><img src="carlo.jpeg"></div>
+                <div class="carousel-item" style="--i:2;"><img src="tommy.jpeg"></div>
+                <div class="carousel-item" style="--i:3;"><img src="carlo2.0.jpeg"></div>
+                <div class="carousel-item" style="--i:4;"><img
+                        src="https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+                <div class="carousel-item" style="--i:5;"><img
+                        src="https://images.unsplash.com/photo-1534972195531-d756b9bfa9f2?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+                <div class="carousel-item" style="--i:6;"><img
+                        src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+                <div class="carousel-item" style="--i:7;"><img
+                        src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+                <div class="carousel-item" style="--i:8;"><img
+                        src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+                <div class="carousel-item" style="--i:9;"><img
+                        src="https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+                <div class="carousel-item" style="--i:10;"><img
+                        src="https://images.unsplash.com/photo-1510511459019-5dee995d362c?auto=format&fit=crop&q=80&w=300&h=400">
+                </div>
+            </div>
+
+            <div class="center-leader">
+                <img src="koshy2.0.png" alt="Koshy Kurien">
+            </div>
+        </div>
+    </section>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const video = document.getElementById('intro-video');
 
-            // Background Music (Starting at 0:28)
+            // Background Music (Starting at 0:27)
             const bgMusic = new Audio('music.mp3.mp3');
-            bgMusic.currentTime = 28;
+            bgMusic.currentTime = 27;
             bgMusic.volume = 0.25;
             bgMusic.loop = true;
 
@@ -1042,7 +1349,7 @@
             });
 
             if (video) {
-                video.currentTime = 28;
+                video.currentTime = 0; // Start from the beginning
                 video.muted = true;
 
                 // Attempt to play
@@ -1050,31 +1357,26 @@
                     console.log("Autoplay failed", e);
                 });
 
-                // Handle custom loop from 0:28 instead of 0:00
-                let loopCount = 0;
-                // Natural end for 1st loop
+                // Handle video lifecycle: Play once and then stop and transition
+                let loopCount = 0; // Fixed: Redefined for Skip Button functionality
+                
                 video.addEventListener('ended', () => {
-                    if (loopCount === 0) {
-                        loopCount = 1;
-                        video.currentTime = 28;
-                        video.play();
+                    // End of play -> Stop and transition immediately
+                    loopCount = 2; 
+                    video.pause();
+                    document.body.style.overflowY = 'auto';
+                    const terminalSection = document.getElementById('terminal-section');
+                    if (terminalSection) {
+                        terminalSection.scrollIntoView({ behavior: 'smooth' });
                     }
+                    const audioCtrl = document.getElementById('audio-control');
+                    if (audioCtrl) audioCtrl.style.display = 'flex';
+                    const skipBtn = document.getElementById('skip-intro');
+                    if (skipBtn) skipBtn.style.display = 'none';
                 });
 
-                // Early end (2s before) for 2nd loop
-                video.addEventListener('timeupdate', () => {
-                    if (loopCount === 1 && video.duration && video.currentTime >= video.duration - 2) {
-                        loopCount = 2;
-                        document.body.style.overflowY = 'auto';
-                        const terminalSection = document.getElementById('terminal-section');
-                        if (terminalSection) {
-                            terminalSection.scrollIntoView({ behavior: 'smooth' });
-                        }
-                        const skipBtn = document.getElementById('skip-intro');
-                        if (skipBtn) skipBtn.style.display = 'none';
-                        video.pause();
-                    }
-                });
+                // Remove the early-end timeupdate listener to allow the full loop to complete
+                // and use the 'ended' event for a cleaner stop as requested.
 
                 // Secret Shortcut & Skip Button
                 const skipBtn = document.getElementById('skip-intro');
@@ -1092,7 +1394,7 @@
                         const audioCtrl = document.getElementById('audio-control');
                         if (audioCtrl) audioCtrl.style.display = 'flex';
                         if (skipBtn) skipBtn.style.display = 'none';
-                        
+
                         // Jump to 2s before the end for a consistent final frame
                         if (video.duration) {
                             video.currentTime = video.duration - 2;
@@ -1266,11 +1568,174 @@
         // Trigger animation on scroll for terminal section
         window.addEventListener('scroll', () => {
             const terminal = document.getElementById('terminal-section');
-            const rect = terminal.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.8) {
-                document.body.classList.add('loaded');
+            const details = document.getElementById('details-section');
+
+            // Terminal Section Logic
+            if (terminal) {
+                const tRect = terminal.getBoundingClientRect();
+                if (tRect.top < window.innerHeight * 0.8) {
+                    document.body.classList.add('loaded');
+                } else if (tRect.top >= window.innerHeight) {
+                    document.body.classList.remove('loaded');
+                }
+            }
+
+            // Details Section Logic
+            if (details) {
+                const dRect = details.getBoundingClientRect();
+                const leaderInTerminal = document.querySelector('#terminal-section .flip-card[data-type="leader"]');
+
+                // Hide terminal leader as we approach the detail section
+                if (dRect.top < window.innerHeight * 0.9) {
+                    if (leaderInTerminal) leaderInTerminal.classList.add('moving-down');
+                } else {
+                    if (leaderInTerminal) leaderInTerminal.classList.remove('moving-down');
+                }
+
+                if (dRect.top < window.innerHeight * 0.6) {
+                    if (!details.classList.contains('active')) {
+                        details.classList.add('active');
+                        // Trigger particle formation
+                        spawnFormingParticles();
+                        // Trigger typewriter effect
+                        const h2Title = details.querySelector('h2');
+                        const bioText = details.querySelector('.bio-text');
+                        const detailCard = details.querySelector('.flip-card');
+
+                        if (bioText) {
+                            setTimeout(() => {
+                                // Start both together and sync their completion
+                                startTypewriter(bioText, 8, false); // Fast bio (~3.6s)
+                                if (h2Title) startTypewriter(h2Title, 300, true); // Very slow title to end with bio (~3.6s)
+                            }, 1600);
+                        }
+
+                        // Add interaction listeners to the card in details section
+                        if (detailCard && h2Title) {
+                            detailCard.style.pointerEvents = 'auto'; // Enable clicking
+
+                            // Spotlight mouse tracking
+                            detailCard.onmousemove = (e) => {
+                                const rect = detailCard.getBoundingClientRect();
+                                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                                detailCard.style.setProperty('--mouse-x', x + '%');
+                                detailCard.style.setProperty('--mouse-y', y + '%');
+                            };
+
+                            detailCard.onclick = () => {
+                                h2Title.classList.remove('blink-twice');
+                                void h2Title.offsetWidth; // Trigger reflow
+                                h2Title.classList.add('blink-twice');
+                                setTimeout(() => {
+                                    h2Title.classList.remove('blink-twice');
+                                }, 800);
+                            };
+                        }
+                    }
+                } else if (dRect.top >= window.innerHeight * 0.8) {
+                    details.classList.remove('active');
+                    // Reset bio and title text for next time
+                    const h2Title = details.querySelector('h2');
+                    const bioText = details.querySelector('.bio-text');
+
+                    // Kill any ongoing animations to prevent overlap
+                    if (h2Title && h2Title.typingTimer) clearTimeout(h2Title.typingTimer);
+                    if (bioText && bioText.typingTimer) clearTimeout(bioText.typingTimer);
+
+                    if (h2Title) h2Title.style.opacity = '0';
+                    if (bioText) bioText.style.opacity = '0';
+
+                    [h2Title, bioText].forEach(el => {
+                        if (el && el.getAttribute('data-full-text')) {
+                            el.innerHTML = el.getAttribute('data-full-text');
+                        }
+                    });
+                }
             }
         });
+
+        function startTypewriter(element, speed = 15, showCursor = false, onComplete = null) {
+            // Cancel any existing animation on this element to prevent jumbled text
+            if (element.typingTimer) {
+                clearTimeout(element.typingTimer);
+            }
+
+            const fullText = element.getAttribute('data-full-text') || element.innerHTML;
+            if (!element.getAttribute('data-full-text')) {
+                element.setAttribute('data-full-text', fullText);
+            }
+
+            element.innerHTML = '';
+            element.style.opacity = '1';
+
+            let i = 0;
+            const cursorSpan = showCursor ? '<span class="typing-cursor">_</span>' : '';
+
+            function type() {
+                if (i < fullText.length) {
+                    let currentContent = element.innerHTML;
+                    if (showCursor) currentContent = currentContent.replace(cursorSpan, '');
+
+                    if (fullText.substring(i, i + 4) === '<br>') {
+                        element.innerHTML = currentContent + '<br>' + cursorSpan;
+                        i += 4;
+                    } else {
+                        element.innerHTML = currentContent + fullText.charAt(i) + cursorSpan;
+                        i++;
+                    }
+                    element.typingTimer = setTimeout(type, speed);
+                } else {
+                    if (showCursor) {
+                        element.innerHTML = element.innerHTML.replace(cursorSpan, '');
+                    }
+                    delete element.typingTimer;
+                    if (onComplete) onComplete();
+                }
+            }
+            type();
+        }
+
+        function spawnFormingParticles() {
+            const details = document.getElementById('details-section');
+            const card = details.querySelector('.leader-falling-card');
+            const rect = card.getBoundingClientRect();
+            const targetX = rect.left + rect.width / 2;
+            const targetY = rect.top + rect.height / 2;
+
+            for (let i = 0; i < 40; i++) {
+                const p = document.createElement('div');
+                p.className = 'forming-particle';
+
+                // Random side of the screen to come from
+                const side = Math.floor(Math.random() * 4);
+                let startX, startY;
+
+                if (side === 0) { startX = Math.random() * window.innerWidth; startY = -20; } // Top
+                else if (side === 1) { startX = Math.random() * window.innerWidth; startY = window.innerHeight + 20; } // Bottom
+                else if (side === 2) { startX = -20; startY = Math.random() * window.innerHeight; } // Left
+                else { startX = window.innerWidth + 20; startY = Math.random() * window.innerHeight; } // Right
+
+                p.style.left = startX + 'px';
+                p.style.top = startY + 'px';
+                p.style.transform = `scale(${Math.random() * 2 + 1})`;
+
+                document.body.appendChild(p);
+
+                // Animate towards the card center
+                requestAnimationFrame(() => {
+                    setTimeout(() => {
+                        p.style.left = (targetX + (Math.random() - 0.5) * 100) + 'px';
+                        p.style.top = (targetY + (Math.random() - 0.5) * 100) + 'px';
+                        p.style.opacity = '0';
+                        p.style.transform = 'scale(0)';
+                    }, 50);
+                });
+
+                // Clean up
+                setTimeout(() => p.remove(), 1500);
+            }
+        }
     </script>
 </body>
 
